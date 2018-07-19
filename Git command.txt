@@ -1,0 +1,80 @@
+1.Frenode IRC 服务器（irc.freenode.net）上的 #git 或 #github 频道寻求帮助
+.
+2.获取帮助：$ git help <verb>
+	    $ git <verb> --help
+	    $ man git-<verb>
+
+3.初始化：$ git init , 要对现有的某个项目开始用 Git 管理，只需到此项目所在的目录执行
+
+4.克隆仓库：$ git clone [url](例如：$ git clone git://github.com/schacon/grit.git，这会在当前目录下创建一个名为 “grit” 的目录，其中包含一个 .git 的目录，用于保存下载下来的所有版本记录，然后从中取出最新版本的文件拷贝。如果进入这个新建的 grit 目录，你会看到项目中的所有文件已经在里边了，准备好后续的开发和使用。如果希望在克隆的时候，自己定义要新建的项目目录名称，可以在上面的命令末尾指定新的名字:$ git clone git://github.com/schacon/grit.git mygrit)
+
+5.检查当前文件状态：$ git status
+
+6.跟踪新文件(放入暂存区)：$ git add [文件或目录路径(文件须在仓库中)]
+
+7.忽略某些文件：创建名为.gitignore的文件
+
+8.查看更新：
+	    a.查看尚未暂存的文件更新了哪些部分: $ git diff , 此命令比较的是工作目录中当前文件和暂存区域快照之间的差异，也就是修改之后还没有暂存起来的变化内容。
+            b.查看已经暂存起来的文件和上次提交时的快照之间的差异：$ git diff --cached 
+
+9.提交更新：$ git commit -m "提交说明"
+
+10.跳过使用暂存区域(即git add):$ git commit -a , Git就会自动把所有已经跟踪过的文件暂存起来一并提交(例如：$ git commit -a -m 'added new benchmarks')
+
+11.移除文件：a. $ git rm [文件名] ， 从工作区删除文件，且将删除记录呈递到了暂存区
+             b. $ git rm --cached [文件名] ，把文件从Git仓库中删除(即从暂存区域移除,并且取消跟踪)，但仍然保留在当前工作目录中
+
+12.重命名文件：$ git mv [原文件名][新文件名](运行 git mv 就相当于运行了下面三条命令:$ mv README.txt README $ git rm README.txt $ git add README)
+
+13.查看提交历史： $ git log
+
+14.修改最后一次提交: $ git commit --amend ， 此命令将使用当前的暂存区域快照提交。如果刚才提交完没有作任何改动，直接运行此命令的话，相当于有机会重新编辑提交说明，但将要提交的文件快照和之前的一样。启动文本编辑器后，会看到上次提交时的说明，编辑它确认没问题后保存退出，就会使用新的提交说明覆盖刚才失误的提交。如果刚才提交时忘了暂存某些修改，可以先补上暂存操作，然后再运行 –amend 提交:$ git commit -m 'initial commit'  $ git add forgotten_file  $ git commit --amend 上面的三条命令最终只是产生一个提交，第二个提交命令修正了第一个的提交内容。
+
+15.取消已经暂存的文件：$ git reset HEAD <file>
+
+16.查看当前的远程库：$ git remote ，列出每个远程库的简短名字 ； $ git remote -v ，列出每个远程库的简短名字，并显示对应的克隆地址 
+
+17.添加远程仓库：$ git remote add [shortname] [url](例如：$ git remote add pb git://github.com/paulboone/ticgit.git)
+
+18.从远程仓库抓取数据：$ git fetch [远程服务器名] （[远程分支名]可不填），同步远程服务器上的(远程分支的)数据到本地 （***如果远程分支有所更新，本地要上传文件到远程分支，应先fetch,再merge，然后push！！！）
+
+19.合并分支(最终合并到当前分支)：$ git merge [将被合并的分支名](例如：将hotfix分支合并到主分支master，亦即快进master分支 $ git checkout master $ git merge hotfix)
+
+20.推送数据到远程仓库：$ git push [remote-name] [branch-name] ，如果要把本地的 master 分支推送到 origin 服务器上（再次说明下，克隆操作会自动使用默认的 master 和 origin 名字），可以运行下面的命令:$ git push origin master 只有在所克隆的服务器上有写权限，或者同一时刻没有其他人在推数据，这条命令才会如期完成任务。如果在你推数据前，已经有其他人推送了若干更新，那你的推送操作就会被驳回。你必须先把他们的更新抓取到本地，合并到自己的项目中，然后才可以再次推送。
+
+21.从远程仓库获取数据并进行合并(等价进行了fetch和merge,但建议分开进行，因为取回可以先查看有什么差异，再决定是否合并)：$ git pull [远程主机名] [远程分支名]:[本地分支名]
+
+
+22.远程仓库的删除和重命名：$ git remote rename [原名][新名]
+                           $ git remote rm [要移除的远端仓库名]
+
+23.分支的新建与切换：a.新建：$ git branch [新分支名]
+                     b.切换：$ git checkout [分支名]
+		     c.新建并切换到该分支，$ git checkou -b [新分支]
+
+24.查看远程仓库信息：$ git remote show [remote-name] 
+
+25.删除分支：$ git branch -d [将被删除的分支名] （-D可以强制删除）
+
+26.遇到冲突时的分支合并：找到冲突的文件，并手动修改成一样，再add， 再commit，再merge
+
+27.当前所有分支的清单：$ git branch  (若要查看各个分支最后一个提交对象的信息，运行 git branch -v；要从该清单中筛选出你已经（或尚未）与当前分支合并的分支，可以用--merge 和 --no-merged 选项)
+
+28.推送本地分支：$ git push [远程仓库名A] [分支名B]，推送本地的名为B的分支到远程仓库A中名为B的分支中
+                 $ git push [远程仓库名A] [分支名B]:[分支名C]，推送本地的名为B的分支到远程仓库A中名为C的分支中
+
+29.删除远程分支：$ git push [远程名]:[分支名]
+
+30.分支的衍合，慎用！(仅用于没有上传过公共服务器的工程)
+
+
+
+
+
+
+
+
+
+
+
